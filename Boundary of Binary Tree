@@ -1,0 +1,67 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+        if (!isLeaf(root)) {
+            result.add(root.val);
+        }
+        TreeNode node = root.left;
+        while (node != null) {
+            if (!isLeaf(node)) {
+                result.add(node.val);
+            }
+            if (node.left != null) {
+                node = node.left;
+            }else {
+                node = node.right;
+            }
+        }
+        adLeaves(root, result);
+        
+        LinkedList<TreeNode> stack = new LinkedList<>();
+        TreeNode node1 = root.right;
+        while (node1 != null) {
+            if (!isLeaf(node1)) {
+                stack.push(node1);
+            }
+            if (node1.right != null) {
+                node1 = node1.right;
+            }else {
+                node1 = node1.left;
+            }
+        }
+        while (!stack.isEmpty()) {
+            result.add(stack.pop().val);
+        }
+        return result;
+    }
+    
+    private boolean isLeaf(TreeNode root) {
+        return root.left == null && root.right == null;
+    }
+    
+    private void adLeaves(TreeNode root, List<Integer> result) {
+        if (isLeaf(root)) {
+            result.add(root.val);
+        }else {
+            if (root.left != null) {
+                adLeaves(root.left, result);
+            }
+            if (root.right != null) {
+                adLeaves(root.right, result);
+            }
+        }
+        
+    }
+}
