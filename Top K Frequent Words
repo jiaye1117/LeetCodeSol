@@ -1,0 +1,40 @@
+class Solution {
+    public List<String> topKFrequent(String[] words, int k) {
+        List<String> result = new ArrayList<>();
+        Map<String, Node> helper = new HashMap<>();
+        for (String word : words) {
+            if (!helper.containsKey(word)) {
+                helper.put(word, new Node (word, 0));
+            }
+            helper.get(word).fre = helper.get(word).fre + 1;
+        }
+        PriorityQueue<Node> pq = new PriorityQueue<Node>(k, new Comparator<Node>() {
+            @Override
+            public int compare (Node a, Node b) {
+                if (a.fre == b.fre) {
+                    return a.str.compareTo(b.str);
+                }else {
+                    return b.fre - a.fre;
+                }
+            }
+        });
+        
+        for (Map.Entry<String, Node> entry : helper.entrySet()) {
+            pq.offer(entry.getValue());
+        }
+        for (int i = 0; i < k; i++) {
+            result.add(pq.poll().str);
+        }
+        return result;
+    }
+}
+
+class Node {
+    String str;
+    int fre;
+    
+    public Node(String str, int fre) {
+        this.str = str;
+        this.fre = fre;
+    }
+}
