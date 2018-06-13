@@ -1,0 +1,40 @@
+/**
+ * class ListNode {
+ *   public int value;
+ *   public ListNode next;
+ *   public ListNode(int value) {
+ *     this.value = value;
+ *     next = null;
+ *   }
+ * }
+ */
+public class Solution {
+  public ListNode removeNthFromEnd(ListNode head, int n) {
+    // Write your solution here
+    int length = 0;
+    ListNode cur = head;
+    while (cur != null) {
+    	length ++;
+      cur = cur.next;
+    }
+    int step = length - n;
+    if (step > length) {
+    	return head;
+    }
+    if (step == 0) {
+    	return head.next;
+    }
+    ListNode curr = head;
+    ListNode prev = null;
+    while (curr != null) {
+    	step --;
+      prev = curr;
+      curr = curr.next; 
+      if (step == 0) {
+      	prev.next = curr.next;
+        break;
+      }
+    }
+    return head;
+  }
+}
