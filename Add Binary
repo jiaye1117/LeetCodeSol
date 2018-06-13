@@ -1,0 +1,28 @@
+public class Solution {
+  public String addBinary(String a, String b) {
+    // Write your solution here
+    StringBuilder sb = new StringBuilder();
+    int ap = a.length() - 1;
+    int bp = b.length() - 1;
+    int carry = 0;
+    while (ap >= 0 || bp >= 0) {
+      int x = 0;
+      int y = 0;
+      if (ap >= 0) {
+        x = a.charAt(ap) - '0';
+        ap --;
+      }
+      if (bp >= 0) {
+        y = b.charAt(bp) - '0';
+        bp --;
+      }
+      int sum = x + y + carry;
+      sb.append(sum % 2);
+      carry = sum / 2;
+    }
+    if (carry > 0) {
+      sb.append("1");
+    }
+    return sb.reverse().toString();
+  }
+}
