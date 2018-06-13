@@ -1,0 +1,26 @@
+/**
+ * public class TreeNode {
+ *   public int key;
+ *   public TreeNode left;
+ *   public TreeNode right;
+ *   public TreeNode(int key) {
+ *     this.key = key;
+ *   }
+ * }
+ */
+public class Solution {
+  private TreeNode prev = null;
+  public TreeNode flatten(TreeNode root) {
+    // Write your solution here
+    if (root == null) {
+      return null;
+    }
+    flatten(root.right);
+    flatten(root.left);
+    root.right = prev;
+    root.left = null;
+    prev = root;
+    return prev;
+  }
+  
+}
