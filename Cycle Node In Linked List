@@ -1,0 +1,26 @@
+
+/**
+ * class ListNode {
+ *   public int value;
+ *   public ListNode next;
+ *   public ListNode(int value) {
+ *     this.value = value;
+ *     next = null;
+ *   }
+ * }
+ */
+public class Solution {
+  public ListNode cycleNode(ListNode head) {
+    // write your solution here
+    Set<ListNode> visited = new HashSet<>();
+    ListNode cur = head;
+    while (cur != null) {
+      if (visited.contains(cur)) {
+        return cur;
+      }
+      visited.add(cur);
+      cur = cur.next;
+    }
+    return null;
+  }
+}
