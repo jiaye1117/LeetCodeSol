@@ -1,0 +1,38 @@
+/**
+ * public class TreeNode {
+ *   public int key;
+ *   public TreeNode left;
+ *   public TreeNode right;
+ *   public TreeNode(int key) {
+ *     this.key = key;
+ *   }
+ * }
+ */
+public class Solution {
+  public String[] binaryTreePaths(TreeNode root) {
+    // Write your solution here
+   
+    List<String> cur = new ArrayList<>();  
+    if (root == null) {
+      return new String[]{};
+    }
+    DFS(root, cur, String.valueOf(root.key));
+    String[] result = new String[cur.size()];
+    for (int i = 0; i < cur.size(); i++) {
+      result[i] = cur.get(i);
+    }
+    return result;
+  }
+  private void DFS (TreeNode root, List<String> cur, String sb) {
+    if (root.left == null && root.right == null) {
+      cur.add(sb);
+      return;
+    }
+    if (root.left != null) {
+      DFS(root.left, cur, sb + "->" + root.left.key);
+    }
+    if (root.right != null) {
+      DFS(root.right, cur, sb + "->" + root.right.key);
+    }
+  }  
+}
