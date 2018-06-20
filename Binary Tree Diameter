@@ -1,0 +1,29 @@
+/**
+ * public class TreeNode {
+ *   public int key;
+ *   public TreeNode left;
+ *   public TreeNode right;
+ *   public TreeNode(int key) {
+ *     this.key = key;
+ *   }
+ * }
+ */
+public class Solution {
+  int diameter = 0;
+  public int diameter(TreeNode root) {
+    // Write your solution here   
+    DFS(root);
+    return diameter;
+  }
+  private int DFS (TreeNode root) {
+    if (root == null) {
+      return 0;
+    }
+    int left = DFS(root.left);
+    int right = DFS(root.right);
+    if (left != 0 && right != 0) {
+       diameter = Math.max(diameter, left + right + 1);
+    }
+    return Math.max(left, right) + 1;
+  } 
+}
