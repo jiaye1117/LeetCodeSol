@@ -1,0 +1,56 @@
+/**
+ * public class TreeNode {
+ *   public int key;
+ *   public TreeNode left;
+ *   public TreeNode right;
+ *   public TreeNode(int key) {
+ *     this.key = key;
+ *   }
+ * }
+ */
+public class Solution {
+  public List<Integer> verticalOrder(TreeNode root) {
+    // Write your solution here
+    if (root == null) {
+      return new ArrayList<>();
+    }
+    List<Integer> result = new ArrayList<>();
+    HashMap<Integer, List<Integer>> map = new HashMap<>();
+    Queue<Pair> q = new LinkedList<>();
+    q.offer(new Pair(root, 0));
+    int min = 0;
+    int max = 0;
+    while (!q.isEmpty()) {
+      Pair cur = q.poll();
+      if (map.containsKey(cur.column)) {
+        map.get(cur.column).add(cur.root.key);
+      }else {
+        map.put(cur.column, new ArrayList<Integer>(Arrays.asList(cur.root.key)));
+      }
+      if (cur.root.left != null) {
+        q.offer(new Pair(cur.root.left, cur.column - 1));
+        min = Math.min(min, cur.column - 1);
+      }
+      if (cur.root.right != null) {
+        q.offer(new Pair(cur.root.right, cur.column + 1));
+        max = Math.max(max, cur.column + 1);
+      }
+    }
+    for (int i = min; i <= max; i++) {
+      List<Integer> res = map.get(i);
+      for (Integer ele : res) {
+        result.add(ele);
+      }
+    }
+    return result;
+  }
+}
+
+class Pair {
+  TreeNode root;
+  int column;
+  public Pair (TreeNode root, int column) {
+    this.root = root;
+    this.column = column;
+  }
+}
