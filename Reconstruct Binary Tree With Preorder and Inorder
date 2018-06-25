@@ -1,0 +1,34 @@
+/**
+ * public class TreeNode {
+ *   public int key;
+ *   public TreeNode left;
+ *   public TreeNode right;
+ *   public TreeNode(int key) {
+ *     this.key = key;
+ *   }
+ * }
+ */
+public class Solution {
+  public TreeNode reconstruct(int[] inOrder, int[] preOrder) {
+    // Write your solution here
+    Map<Integer, Integer> map = new HashMap<>();
+    for (int i = 0; i < inOrder.length; i++) {
+      map.put(inOrder[i], i);
+    }
+    return helper(inOrder, 0, inOrder.length - 1, preOrder, 0, preOrder.length - 1, map);
+  }
+  private TreeNode helper (int[] in, int inLeft, int inRight, int[] pre, int preLeft, int preRight, Map<Integer, Integer> map) {
+    if (inLeft > inRight) {
+      return null;
+    }
+    // first find the root
+    TreeNode root = new TreeNode(pre[preLeft]);
+    // then find the index of root in inorder array
+    int minIndex = map.get(root.key);
+    // find the left subtree size 
+    int leftSize = minIndex - inLeft;
+    root.left = helper(in, inLeft, minIndex - 1, pre, preLeft + 1, preLeft + leftSize, map);
+    root.right = helper(in, minIndex + 1, inRight, pre, preLeft + leftSize + 1, preRight, map);
+    return root;
+  }
+}
