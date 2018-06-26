@@ -1,0 +1,30 @@
+public class Solution {
+  String[] keyboard = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+  public String[] combinations(int number) {
+    // Write your solution here
+    String num = String.valueOf(number);
+    
+    String prefix = "";
+    List<String> res = new ArrayList<>();
+    dfs(num, res, prefix, 0);
+    String[] result = new String[res.size()];
+    for (int i = 0; i < res.size(); i++) {
+      result[i] = res.get(i);
+    }
+    return result;
+  }
+  private void dfs(String digits, List<String> res, String prefix, int level) {
+     if(level >= digits.length()){
+       res.add(prefix);
+       return;
+     }
+     String c= keyboard[digits.charAt(level)-'0'];
+     if (c == "") {
+       dfs(digits, res, prefix, level+1);
+     }else {
+        for(int j=0;j<c.length();j++){
+           dfs(digits, res, prefix + c.charAt(j), level+1);
+        }
+     } 
+  }
+}
