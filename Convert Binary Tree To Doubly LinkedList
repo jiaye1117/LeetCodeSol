@@ -1,0 +1,40 @@
+
+/**
+ * public class TreeNode {
+ *   public int key;
+ *   public TreeNode left;
+ *   public TreeNode right;
+ *   public TreeNode(int key) {
+ *     this.key = key;
+ *   }
+ * }
+ */
+public class Solution {
+ 
+  public TreeNode toDoubleLinkedList(TreeNode root) {
+    // Write your solution here.
+    if (root == null) {
+      return root;
+    }
+    TreeNode[] prev = new TreeNode[]{null};
+    TreeNode[] head = new TreeNode[]{null};
+    helper(root, prev, head);
+    return head[0];
+  }
+  private void helper (TreeNode root, TreeNode[] prev, TreeNode[] head) {
+    // base case
+    if (root == null) {
+      return;
+    }
+    // recursive 
+    helper(root.left, prev, head);
+    if (prev[0] == null) {
+      head[0] = root;
+    }else {
+      root.left = prev[0];
+      prev[0].right = root;
+    }
+    prev[0] = root;
+    helper(root.right, prev, head);
+  }
+}
