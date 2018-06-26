@@ -1,0 +1,33 @@
+public class Solution {
+  public int numIslands(char[][] grid) {
+    // Write your solution here
+    if (grid == null || grid.length == 0) {
+      return 0;
+    }
+    int length = grid.length;
+    int width = grid[0].length;
+    int numOfIsland = 0;
+    for (int i = 0; i < length; i ++) {
+      for (int j = 0; j < width; j ++) {
+        if (grid[i][j] == '1') {
+          numOfIsland ++;
+          DFS(grid, i, j);
+        }
+      }
+    }
+    return numOfIsland;
+  }
+  private void DFS (char[][] grid, int row, int col) {
+    // base case
+    if (row < 0 || col < 0 || row >= grid.length || col >= grid[0].length || grid[row][col] == '0') {
+      return;
+    }
+    // recursive rule
+    // marked visited
+    grid[row][col] = '0';
+    DFS(grid, row - 1, col);
+    DFS(grid, row + 1, col);
+    DFS(grid, row, col - 1);
+    DFS(grid, row, col + 1);
+  }
+}
