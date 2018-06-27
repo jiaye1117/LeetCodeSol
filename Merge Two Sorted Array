@@ -1,0 +1,50 @@
+public class Solution {
+  public int[] merge(int[] A, int m, int[] B, int n) {
+    // Write your solution here
+    int i = 0;
+    int j = 0;
+    int[] result = new int[m+n];
+    int start = 0;
+    while (i < m && j < n) {
+      if (A[i] < B[j]) {
+        result[start] = A[i];
+        start ++;
+        i ++;
+      }else {
+        result[start] = B[j];
+        start ++;
+        j ++;
+      }
+    }
+    while (i < m) {
+      result[start] = A[i];
+      i ++;
+      start ++;
+    }
+    while (j < n) {
+      result[start] = B[j];
+      j ++;
+      start ++;
+    }
+    return result;
+  }
+}
+
+method 2:
+void merge(int A[], int m, int B[], int n) {
+        int i=m-1;
+		int j=n-1;
+		int k = m+n-1;
+		while(i >=0 && j>=0)
+		{
+			if(A[i] > B[j])
+				A[k--] = A[i--];
+			else
+				A[k--] = B[j--];
+		}
+		while(j>=0)
+			A[k--] = B[j--];
+    }
+    
+time complexity: O(m+n)
+space complexity: O(1)
