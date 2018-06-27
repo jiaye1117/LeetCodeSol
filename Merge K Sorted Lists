@@ -1,0 +1,38 @@
+/**
+ * class ListNode {
+ *   public int value;
+ *   public ListNode next;
+ *   public ListNode(int value) {
+ *     this.value = value;
+ *     next = null;
+ *   }
+ * }
+ */
+public class Solution {
+  public ListNode merge(List<ListNode> listOfLists) {
+    // Write your solution here/.
+    PriorityQueue<ListNode> minheap = new PriorityQueue<>(11, new Comparator<ListNode>() {
+      @Override
+      public int compare (ListNode a, ListNode b) {
+        if (a.value == b.value) {
+          return 0;
+        }
+        return a.value < b.value ? -1 : 1;
+      }
+    });
+    for (ListNode node : listOfLists) {
+      minheap.offer(node);
+    }
+    ListNode dummyNode = new ListNode(0);
+    ListNode cur = dummyNode;
+    while (!minheap.isEmpty()) {
+      ListNode temp = minheap.poll();
+      cur.next = temp;
+      if (cur.next.next != null) {
+        minheap.offer(cur.next.next);
+      }
+      cur = cur.next;
+    }
+    return dummyNode.next;
+  }
+}
