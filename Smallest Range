@@ -1,0 +1,87 @@
+public class Solution {
+  public int[] smallestRange(int[][] arrays) {
+    // Write your solution here
+    int max = Integer.MIN_VALUE;
+    int minx = 0;
+    int miny = Integer.MAX_VALUE;
+    int[] next = new int[arrays.length];
+    boolean flag = true;
+    PriorityQueue<Element> minheap = new PriorityQueue<>(11, new Comparator<Element>() {
+      @Override
+      public int compare (Element a, Element b) {
+        return a.val - b.val;
+      }
+    });
+    for (int i = 0; i < arrays.length; i ++) {
+      minheap.offer(new Element(arrays[i][0], i, 0));
+      max = Math.max(max, arrays[i][0]);
+    }
+    for (int i = 0; i < arrays.length && flag; i ++) {
+      for (int j = 0; j < arrays[i].length && flag; j ++) {
+        Element ele = minheap.poll();
+        if (miny - minx > max - ele.val) {
+          minx = ele.val;
+          miny = max;
+        }
+        ele.col ++;
+        if (ele.col == arrays[ele.row].length) {
+          flag = false;
+          break;
+        }
+        minheap.offer(new Element(arrays[ele.row][ele.col], ele.row, ele.col));
+        max = Math.max(max, arrays[ele.row][ele.col]);
+      }
+    }
+    return new int[]{minx, miny};
+  }
+}
+
+class Element {
+  int val;
+  int row;
+  int col;
+  public Element (int val, int row, int col) {
+    this.val = val;
+    this.row = row;
+    this.col = col;
+  }
+}
+
+Similar method
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+public class Solution7 {
+    public int[] smallestRange(int[][] nums) {
+        int minx = 0, miny = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        int[] next = new int[nums.length];
+        boolean flag = true;
+        PriorityQueue< Integer > min_queue = new PriorityQueue < Integer > (11, new Comparator<Integer>() {
+            @Override
+            public int compare (Integer i, Integer j) {
+                return nums[i][next[i]] - nums[j][next[j]];
+            }
+        });
+        for (int i = 0; i < nums.length; i++) {
+            min_queue.offer(i);
+            max = Math.max(max, nums[i][0]);
+        }
+        for (int i = 0; i < nums.length && flag; i++) {
+            for (int j = 0; j < nums[i].length && flag; j++) {
+                int min_i = min_queue.poll();
+                if (miny - minx > max - nums[min_i][next[min_i]]) {
+                    minx = nums[min_i][next[min_i]];
+                    miny = max;
+                }
+                next[min_i]++;
+                if (next[min_i] == nums[min_i].length) {
+                    flag = false;
+                    break;
+                }
+                min_queue.offer(min_i);
+                max = Math.max(max, nums[min_i][next[min_i]]);
+            }
+        }
+        return new int[] { minx, miny};
+    }
+}
