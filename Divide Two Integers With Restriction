@@ -1,0 +1,18 @@
+public class Solution {
+  public int divide(int a, int b) {
+    // Write your solution here
+    if (b == 0) {
+      return Integer.MAX_VALUE;
+    }
+    int sign = (a < 0) ^ (b < 0) ? -1 : 1;
+    
+    a = Math.abs(a);
+    b = Math.abs(b);
+    int result = 0;
+    while (a >= b) {
+      a -= b;
+      result ++;
+    }
+    return result * sign;
+  }
+}
