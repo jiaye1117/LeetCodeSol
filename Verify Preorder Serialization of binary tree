@@ -1,0 +1,17 @@
+public class Solution {
+  public boolean isValidSerialization(String preorder) {
+    // Write your solution here
+    LinkedList<String> stack = new LinkedList<>();
+    String[] preOrder = preorder.split(",");
+    for (int i = 0; i < preOrder.length; i ++) {
+      stack.offer(preOrder[i]);
+      while (stack.size() >= 3 && stack.get(stack.size() - 1).equals("#") && stack.get(stack.size() - 2).equals("#") && !stack.get(stack.size() - 3).equals("#")) {
+        stack.pollLast();
+        stack.pollLast();
+        stack.pollLast();
+        stack.offer("#");
+      }
+    }
+    return stack.size() == 1 && stack.peekLast().equals("#");
+  }
+}
