@@ -1,0 +1,25 @@
+public class Solution {
+  public List<String> findMissingRanges(int[] num, int lower, int upper) {
+    // Write your solution here
+    List<String> missing = new ArrayList<>();
+    long next = lower;
+    for (long number : num) {
+      if (number < next) {
+        continue;
+      }
+      if (number == next) {
+        next ++;
+        continue;
+      }
+      missing.add(getRange(next, number - 1));
+      next = number + 1;
+    }
+    if (next <= upper) {
+      missing.add(getRange(next, upper));
+    }
+    return missing;
+  }
+  private String getRange(long a, long b) {
+    return (a == b) ? String.valueOf(a) : String.format("%d->%d", a, b);
+  }
+}
