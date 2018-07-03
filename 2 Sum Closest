@@ -1,0 +1,31 @@
+public class Solution {
+  public List<Integer> closest(int[] array, int target) {
+    // write your solution here
+    if (array == null || array.length < 2) {
+      return new ArrayList<>();
+    }
+    List<Integer> result = new ArrayList<>();
+    int left = 0;
+    int right = array.length - 1;
+    int diff = Integer.MAX_VALUE;
+    int left_d = 0;
+    int right_d = 0;
+    Arrays.sort(array);
+    while (left < right) {
+      int sum = array[left] + array[right];
+      if (Math.abs(sum - target) < diff) {
+        left_d = left;
+        right_d = right;
+        diff = Math.abs(sum - target);
+      }
+      if (sum > target) {
+        right --;
+      }else {
+        left ++;
+      }
+    }
+    result.add(array[left_d]);
+    result.add(array[right_d]);
+    return result;
+  }
+}
