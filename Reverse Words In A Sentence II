@@ -1,0 +1,45 @@
+public class Solution {
+  public String reverseWords(String input) {
+    // Write your solution here
+    if (input == null) {
+      return null;
+    }
+    char[] array = input.toCharArray();
+    int end = 0;
+    // truncate all heading/trailing/duplicate space 
+    for (int i = 0; i < array.length; i ++) {
+      if (array[i] == ' ' && (i == 0 || array[i-1] == ' ')) {
+        continue;
+      }
+      array[end] = array[i];
+      end ++;
+    }
+    if (end > 0 && array[end - 1] == ' ') {
+      array = Arrays.copyOfRange(array, 0, end - 1);
+    }else {
+      array = Arrays.copyOfRange(array, 0, end);
+    }
+    // reverse the whole sentence
+    reverse(array, 0, array.length - 1);
+    // reverse each word
+    int start = 0;
+    for (int i = 0; i < array.length; i ++) {
+      if (array[i] != ' ' && (i == 0 || array[i-1] == ' ')) {
+        start = i;
+      }
+      if (array[i] != ' ' && (i == array.length - 1 || array[i+1] == ' ')) {
+        reverse(array, start, i);
+      }
+    }
+    return new String(array);
+  }
+  private void reverse(char[] array, int left, int right) {
+    while (left < right) {
+      char temp = array[left];
+      array[left] = array[right];
+      array[right] = temp;
+      left ++;
+      right --;
+    }
+  }
+}
