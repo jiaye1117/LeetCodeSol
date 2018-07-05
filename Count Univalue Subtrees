@@ -1,0 +1,35 @@
+/**
+ * public class TreeNode {
+ *   public int key;
+ *   public TreeNode left;
+ *   public TreeNode right;
+ *   public TreeNode(int key) {
+ *     this.key = key;
+ *   }
+ * }
+ */
+public class Solution {
+  public int countUnivalSubtrees(TreeNode root) {
+    // Write your solution here
+    if (root == null) {
+      return 0;
+    }
+    int[] result = new int[]{0};
+    isUnivalSubtrees(root, result);
+    return result[0];
+  }
+  private boolean isUnivalSubtrees (TreeNode root, int[] result) {
+    // base case
+    if (root == null) {
+      return true;
+    }
+    // recursive rules
+    boolean leftSubtree = isUnivalSubtrees(root.left, result);
+    boolean rightSubtree = isUnivalSubtrees(root.right, result);
+    if (leftSubtree && rightSubtree && (root.left == null || root.left.key == root.key) && (root.right == null || root.right.key == root.key)) {
+      result[0] += 1;
+      return true;
+    }
+    return false;
+  }
+}
